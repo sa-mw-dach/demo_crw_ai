@@ -22,5 +22,7 @@ This demo shows some aspects of integrating an AI/ML model into an app using pip
 
 The 5th demo showcases the installation, configuration and usage of an AI assistant for application development that runs in an air-gapped on-prem environment.
 
+## [Demo 07 - Keycloak](demos/07_keycloak/README.md)
+...
 
 [^license_plate_desc]: https://rh-aiservices-bu.github.io/licence-plate-workshop/
