@@ -143,6 +143,10 @@
 
     ==> save & test connection
 
+1) Check, if SSO works!!! 
+
+    ==> Call http://URL/realms/demojs/account
+
 
 ## Installation & configuration of application
 1) Clone repo
@@ -151,10 +155,6 @@
     cd dev_demos/
     git checkout feature/keycloak
     ```
-
-1) Check, if SSO works!!! 
-
-    ==> Call http://URL/realms/demojs/account
 
 1) Obtain keycloak URL: `oc get route example-kc-route`
 
