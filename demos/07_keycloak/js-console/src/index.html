@@ -17,7 +17,7 @@
 
 <html>
 <head>
-    <script src="https://<<<ADD_KEYCLOAK_URL_HERE>>>/auth/js/keycloak.js"></script>
+    <script src="http://<<<ADD_KEYCLOAK_URL_HERE>>>/js/keycloak.js"></script>
 
     <link href="/patternfly/css/patternfly.css" rel="stylesheet" />
     <link href="/patternfly/css/patternfly-additions.css" rel="stylesheet" />
@@ -83,7 +83,7 @@
         output(o);
     }
 
-    var kc = Keycloak();
+    var kc = new Keycloak();
 
     var updateProfile = function() {
         var d = '<div style="text-align: center;">';

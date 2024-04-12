@@ -1,5 +1,6 @@
 {
   "realm" : "demojs",
-  "auth-server-url" : "https://<<<ADD_KEYCLOAK_URL_HERE>>>/auth",
+  "auth-server-url" : "http://<<<ADD_KEYCLOAK_URL_HERE>>>",
+  "ssl-required" : "none",
   "resource" : "js-console"
 }
