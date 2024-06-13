@@ -37,9 +37,9 @@ commands:
     actions:
       - type: exec
         component: python
-        command: '. /tmp/.venv/bin/activate && python dev_demos/demos/01_license_plate/test_ai_model.py'
+        command: 'python dev_demos/demos/01_license_plate/test_ai_model.py'
   - name: 01_license_plate__3 Test GPU computation
     actions:
       - type: exec
         component: python
-        command: '. /tmp/.venv/bin/activate && python dev_demos/demos/01_license_plate/test_gpu.py'
+        command: 'python dev_demos/demos/01_license_plate/test_gpu.py'

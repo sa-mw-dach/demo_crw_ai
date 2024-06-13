@@ -2,11 +2,10 @@ FROM registry.access.redhat.com/ubi8/python-38
 
 WORKDIR /opt/app-root/src
 
-RUN python3 -m venv /tmp/.venv
-RUN . /tmp/.venv/bin/activate && python -m pip install --upgrade pip
+RUN python -m pip install --upgrade pip
 
 RUN git clone https://github.com/sa-mw-dach/dev_demos.git
-RUN . /tmp/.venv/bin/activate && pip install -r dev_demos/external/licence-plate-workshop/requirements.txt
-RUN . /tmp/.venv/bin/activate && pip install requests
+RUN pip install -r dev_demos/external/licence-plate-workshop/requirements.txt
+RUN pip install requests
 
 ENTRYPOINT ["tail", "-f", "/dev/null"]

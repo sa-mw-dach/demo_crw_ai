@@ -7,10 +7,9 @@ RUN dnf -y install git
 RUN mkdir -p /opt/app-root/src 
 WORKDIR /opt/app-root/src
 
-RUN python3 -m venv /tmp/.venv
-RUN . /tmp/.venv/bin/activate && python -m pip install --upgrade pip
+RUN python -m pip install --upgrade pip
 
-RUN . /tmp/.venv/bin/activate && pip install -r https://raw.githubusercontent.com/sa-mw-dach/dev_demos/main/external/licence-plate-workshop/requirements.txt
-RUN . /tmp/.venv/bin/activate && pip install requests
+RUN pip install -r https://raw.githubusercontent.com/sa-mw-dach/dev_demos/main/external/licence-plate-workshop/requirements.txt
+RUN pip install requests
 
 ENTRYPOINT ["tail", "-f", "/dev/null"]
