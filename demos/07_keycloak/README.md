@@ -6,13 +6,16 @@
 ## Requirements
 ...
 
+Made for RHBK v24...
+
+
 ## Instalation & configuration of Keycloak
 
-1) Create new project: `demo_keycloak`
+1) Create new project: `userXXX-kc` (e.g. user2-kc)
 
 1) Install RHBK operator inside new project
 
-1) Create OpenShift resources
+1) Create OpenShift resources (secret & database)
 
     Secret: 
     ```
@@ -118,7 +121,7 @@
 
 1) Setup mailcatcher:
     ```
-    oc project demo-keycloak
+    oc project userXXX-kc
     oc new-app quay.io/sshaaf/mailcatcher --name=mailcatcher
     oc expose svc/mailcatcher --port 8080
     ```
@@ -148,13 +151,13 @@
     git checkout feature/keycloak
     ```
 
-1) Obtain keycloak URL: `oc get route example-kc-route`
+1) Obtain keycloak URL: `oc get route example-kc-ingress-XXXXXXXXXXX`
 
-1) Adapt 2 files, adding the proper keycloak URL: 
-    1) 'js-console/src/index.html' and 
-    1) 'keycloak.json'
+1) Adapt 2 files, adding the proper keycloak URL including https://... (important!): 
+    1) `dev_demos/demos/07_keycloak/js-console/src/index.html` and 
+    1) `dev_demos/demos/07_keycloak/js-console/src/keycloak.json`
 
-1) Execute oc commands in 'js-console/README.md' to roll out app
+1) Execute oc commands in `dev_demos/demos/07_keycloak/js-console/README.md` to roll out app.
 
 1) Configure keycloak for app:
     - `oc get route js-console`
@@ -207,15 +210,19 @@
 
 1) Click on Identity Providers
 
-1) Select GitHub and create new item
+1) Select GitHub and click add GitHub provider. Copy the Redirect URI.
 
-1) Goto GitHub homepage.
+1) Open a new tab and goto GitHub homepage. Go to Settings --> Develoepr settings --> OAuth apps and create new OAuth app.
+
+    Give application name.
 
     Homepage URL: http://KEYCLOAK_URL
 
-    Authorization callback URL: http://KEYCLOAK_URL/realms/demojs/broker/github/endpoint
+    Authorization callback URL: http://KEYCLOAK_URL/realms/demojs/broker/github/endpoint (the URL you copied in the previous step).
 
-1) Create new client secret in GitHub
+    Click "Register application". Then copy ClientID and paste it to the corresponding field in the previous tab, i.e. Keycloak-New OAuth app.
+
+1) Create new client secret in GitHub, copy it and paste it to the corresponding field in the previous tab, i.e. Keycloak-New OAuth app. Then Click "Add" to create the GitHubprovider in Keycloak.
 
 1) In Keycloak in GitHub IdP, go to Mappers and add mapper:
     ```
