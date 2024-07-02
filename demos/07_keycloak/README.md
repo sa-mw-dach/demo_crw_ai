@@ -8,9 +8,9 @@
 
 ## Instalation & configuration of Keycloak
 
-1) Install RHBK operator
-
 1) Create new project: `demo_keycloak`
+
+1) Install RHBK operator inside new project
 
 1) Create OpenShift resources
 
@@ -31,86 +31,78 @@
     apiVersion: apps/v1
     kind: StatefulSet
     metadata:
-    name: postgresql-db
+        name: postgresql-db
     spec:
-    serviceName: postgresql-db-service
-    selector:
-        matchLabels:
-        app: postgresql-db
-    replicas: 1
-    template:
-        metadata:
-        labels:
-            app: postgresql-db
-        spec:
-        containers:
-            - name: postgresql-db
-            image: postgres:latest
-            volumeMounts:
-                - mountPath: /data
-                name: cache-volume
-            env:
-                - name: POSTGRES_PASSWORD
-                value: postgres
-                - name: PGDATA
-                value: /data/pgdata
-                - name: POSTGRES_DB
-                value: keycloak
-        volumes:
-            - name: cache-volume
-            emptyDir: {}
+        serviceName: postgresql-db-service
+        selector:
+            matchLabels:
+                app: postgresql-db
+        replicas: 1
+        template:
+            metadata:
+                labels:
+                    app: postgresql-db
+            spec:
+                containers:
+                    - name: postgresql-db
+                      image: postgres:latest
+                      volumeMounts:
+                          - mountPath: /data
+                            name: cache-volume
+                      env:
+                          - name: POSTGRES_PASSWORD
+                            value: postgres
+                          - name: PGDATA
+                            value: /data/pgdata
+                          - name: POSTGRES_DB
+                            value: keycloak
+                volumes:
+                    - name: cache-volume
+                      emptyDir: {}
     ---
     apiVersion: v1
     kind: Service
     metadata:
-    name: postgres-db
+        name: postgres-db
     spec:
-    selector:
-        app: postgresql-db
-    type: LoadBalancer
-    ports:
-    - port: 5432
-        targetPort: 5432
+        selector:
+            app: postgresql-db
+        type: LoadBalancer
+        ports:
+            - port: 5432
+              targetPort: 5432
     ```
 
-    Keycloak instance & route:
+    Keycloak instance:
+
+    TODO Explain the details about TLS termination, KC dev mode and httpEnabled! Also how route is generated via ingress, which is enabled by default.
+
     ```
     apiVersion: k8s.keycloak.org/v2alpha1
     kind: Keycloak
     metadata:
-    name: example-kc
+        name: example-kc
     spec:
-    instances: 1
-    db:
-        vendor: postgres
-        host: postgres-db
-        usernameSecret:
-        name: keycloak-db-secret
-        key: username
-        passwordSecret:
-        name: keycloak-db-secret
-        key: password
-    http:
-        httpEnabled: true
-    hostname:
-        strict: false
-        strictBackchannel: false
-    ---
-    kind: Route
-    apiVersion: route.openshift.io/v1
-    metadata:
-    name: example-kc-route
-    labels:
-        app: keycloak
-        app.kubernetes.io/instance: example-kc
-        app.kubernetes.io/managed-by: keycloak-operator
-    spec:
-    to:
-        kind: Service
-        name: example-kc-service
-    tls: null
-    port:
-        targetPort: http
+        instances: 1
+        db:
+            vendor: postgres
+            host: postgres-db
+            usernameSecret:
+                name: keycloak-db-secret
+                key: username
+            passwordSecret:
+                name: keycloak-db-secret
+                key: password
+        http:
+            httpEnabled: true
+        hostname:
+            strict: false
+            strictBackchannel: false
+        ingress:
+            className: openshift-default
+        proxy:
+            headers: xforwarded
+
     ```
 
 1) Obtain admin credentials from secret... initial-admin
@@ -126,7 +118,7 @@
 
 1) Setup mailcatcher:
     ```
-    oc project demo_keycloak
+    oc project demo-keycloak
     oc new-app quay.io/sshaaf/mailcatcher --name=mailcatcher
     oc expose svc/mailcatcher --port 8080
     ```
