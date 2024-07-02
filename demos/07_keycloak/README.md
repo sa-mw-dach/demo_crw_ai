@@ -19,11 +19,11 @@
     apiVersion: v1
     kind: Secret
     metadata:
-    name: keycloak-db-secret
-    type: Opaque 
+        name: keycloak-db-secret
+        type: Opaque 
     stringData: 
-    username: postgres
-    password: postgres
+        username: postgres
+        password: postgres
     ```
 
     Database & corresponding service:
