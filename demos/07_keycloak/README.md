@@ -173,13 +173,17 @@ Made for RHBK v24...
 
 1) Ensure you are logged in as Admin
 
+1) Go to Realm settings and then to "User profile"
+
+1) Create attribute with name "avatar_url" and permissions to view & edit for. 
+
 1) Select the user you registered with earlier, `user1`, and not the Admin user.
 
 1) Click on attributes and add key `avatar_url` with value https://upload.wikimedia.org/wikipedia/commons/2/29/Keycloak_Logo.png
 
 1) Click Add followed by Save.
 
-1) Click on Client Scopes then Create and fill with
+1) In Keycloak click on Client Scopes then Create and fill with
     ```
     Name: avatar
     Consent Screen Text: Avatar
