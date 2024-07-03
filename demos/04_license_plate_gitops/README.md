@@ -29,6 +29,8 @@ Working directory for the following steps is `demos/04_license_plate_gitops/a_mo
 
     Do a search & replace, searching for `gitops-demo` and replacing it with `userXXX-gitops-demo` in the entire repo!
 
+    Additionally, search for `app-licenseplate` and replace it with `userXXX-app-licenseplate`.
+    
 1) Create an OpenShift project/namespace `gitops-demo` and switch to it by executing
     ```
     oc apply -f pipeline/model-1-namespace.yaml
