@@ -6,7 +6,7 @@ projects:
     source:
       location: 'https://github.com/sa-mw-dach/dev_demos.git'
       type: git
-      branch: main
+      branch: demo-gitops
 components:
   - id: eclipse/che-theia/latest
     memoryLimit: 1Gi

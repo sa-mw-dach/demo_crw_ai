@@ -11,7 +11,7 @@ spec:
     type: Git
     git:
       uri: 'https://github.com/sa-mw-dach/dev_demos.git'
-      ref: main
+      ref: demo-gitops
     contextDir: /demos/04_license_plate_gitops/b_app/src
   strategy:
     type: Source

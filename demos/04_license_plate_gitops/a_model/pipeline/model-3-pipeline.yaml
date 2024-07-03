@@ -22,7 +22,7 @@ spec:
         - name: verbose
           value: 'true'
         - name: revision
-          value: main
+          value: demo-gitops
       taskRef:
         kind: ClusterTask
         name: git-clone

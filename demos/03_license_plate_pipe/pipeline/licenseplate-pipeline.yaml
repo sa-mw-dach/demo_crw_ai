@@ -24,7 +24,7 @@ spec:
         - name: userHome
           value: /tekton/home
         - name: revision
-          value: main
+          value: demo-gitops
       taskRef:
         kind: ClusterTask
         name: git-clone

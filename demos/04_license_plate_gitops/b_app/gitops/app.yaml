@@ -13,7 +13,7 @@ spec:
       recurse: true
     path: demos/04_license_plate_gitops/b_app/manifests
     repoURL: https://github.com/sa-mw-dach/dev_demos.git
-    targetRevision: main
+    targetRevision: demo-gitops
   ignoreDifferences:
     - group: apps
       jsonPointers:
