@@ -19,11 +19,13 @@ In order to be able to run the demo, the following requirements need to be fullf
 **Important note**: If modifications want to be done on the repo in order to test modifying the model or application later, the repo `https://github.com/sa-mw-dach/dev_demos.git` needs to be forked and the changes need to be done there, eventually also creating a dediated branch inside the forked repo. Additionally, in the entire code base in folder `demos/04_license_plate_gitops` the URL and branch (main) of the original repo need to be replaced by the URL and branch of the forked repo.
 
 ## Create a container image of the AI/ML model
-In the following, the license plate model is backed into a container image and stored in the OpenShift-internal integrated container image registry.
+In the following, the license plate model is baked into a container image and stored in the OpenShift-internal integrated container image registry.
 
 Working directory for the following steps is `demos/04_license_plate_gitops/a_model/`.
 
 1) Familiarize yourself with the `src` folder, which comprises some slightly modified version of the "Red Hat OpenShift Data Science Workshop - Licence plate recognition"[^license_plate_desc]. 
+
+1) **IMPORTANT FOR WORKSHOP**: Do a search & replace, searching for `gitops-demo` and replacing it with `userXXX-gitops-demo` in the entire repo.
 
 1) Create an OpenShift project/namespace `gitops-demo` and switch to it by executing
     ```
