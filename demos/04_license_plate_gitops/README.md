@@ -25,7 +25,11 @@ Working directory for the following steps is `demos/04_license_plate_gitops/a_mo
 
 1) Familiarize yourself with the `src` folder, which comprises some slightly modified version of the "Red Hat OpenShift Data Science Workshop - Licence plate recognition"[^license_plate_desc]. 
 
-1) **IMPORTANT FOR WORKSHOP**: Do a search & replace, searching for `gitops-demo` and replacing it with `userXXX-gitops-demo` in the entire repo.
+1) **IMPORTANT FOR WORKSHOP**
+
+    Do a search & replace, searching for `gitops-demo` and replacing it with `userXXX-gitops-demo` in the entire repo!
+
+    Additionally, search for `: main` and replace it with `: demo-gitops`!
 
 1) Create an OpenShift project/namespace `gitops-demo` and switch to it by executing
     ```
