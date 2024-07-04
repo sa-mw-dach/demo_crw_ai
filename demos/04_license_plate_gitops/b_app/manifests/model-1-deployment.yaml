@@ -19,7 +19,7 @@ spec:
       containers:
         - name: licenseplate
           image: >-
-            image-registry.openshift-image-registry.svc:5000/gitops-demo/licenseplate:v1
+            image-registry.openshift-image-registry.svc:5000/gitops-demo/licenseplate:v2
           ports:
             - containerPort: 5000
               protocol: TCP
