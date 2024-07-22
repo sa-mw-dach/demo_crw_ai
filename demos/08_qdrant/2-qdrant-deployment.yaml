@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: qdrant-test
+  annotations: {}
+spec:
+  selector:
+    matchLabels:
+      app: qdrant-test
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: qdrant-test
+    spec:
+        volumes:
+        - name: qdrant-storage
+          persistentVolumeClaim:
+            claimName: qdrant-storage
+        - name: qdrant-snapshots
+          persistentVolumeClaim:
+            claimName: qdrant-snapshots
+        containers:
+          - name: qdrant
+            image: 'qdrant/qdrant:latest-unprivileged'
+            ports:
+              - containerPort: 6333
+              - containerPort: 6334
+            volumeMounts:
+            - mountPath: /qdrant/storage
+              name: qdrant-storage
+            - mountPath: /qdrant/snapshots
+              name: qdrant-snapshots
+        imagePullSecrets: []
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+  paused: false

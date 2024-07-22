@@ -1,0 +1,12 @@
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: qdrant-test
+  labels: {}
+spec:
+  to:
+    kind: Service
+    name: example
+  tls: null
+  port:
+    targetPort: 6333
