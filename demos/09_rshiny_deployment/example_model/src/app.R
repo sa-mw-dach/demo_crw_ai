@@ -44,9 +44,13 @@ server <- function(input, output) {
     print("hello")
     print(json_payload)
     print("goodbye")
+
+    # Obtain model url from environment variable
+    urlModel <- Sys.getenv("URL_MODEL")
+
     # Send POST request to the API
     response <- POST(
-      url = "https://model-24081535-r-demo.apps.cluster-nhhgn.nhhgn.sandbox1471.opentlc.com/v2/models/model-24081535/infer",
+      url = urlModel,
       body = json_payload,
       encode = "json",
       content_type_json()
