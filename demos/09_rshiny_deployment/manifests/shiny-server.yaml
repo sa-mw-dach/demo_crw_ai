@@ -1,0 +1,132 @@
+apiVersion: apps.openshift.io/v1
+kind: Template
+metadata:
+  name: shiny-server-template
+  annotations:
+    description: "Shiny server template"
+objects:
+
+- apiVersion: image.openshift.io/v1
+  kind: ImageStream
+  metadata:
+    annotations:
+      description: Keeps track of changes in the shiny app
+    labels:
+      app: "${APP_LABEL}"
+    name: "${APP_NAME}"
+
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      description: Build config for shiny application
+      template.alpha.openshift.io/wait-for-ready: "true"
+    labels:
+      app: "${APP_LABEL}"
+    name: "${APP_NAME}"
+  spec:
+    output:
+      to:
+        kind: ImageStreamTag
+        name: "${APP_NAME}:latest"
+    source:
+      git:
+        ref: "${APP_GIT_BRANCH}"
+        uri: "${APP_GIT_URI}"
+      type: Git
+    strategy:
+      dockerStrategy:
+        dockerfilePath: "${REPO_DOCKERFILE_PATH}"
+    triggers:
+    - type: ImageChange
+    - type: ConfigChange
+
+- apiVersion: apps.openshift.io/v1
+  kind: DeploymentConfig
+  metadata:
+    annotations:
+      description: "${APP_NAME} Shiny Server Deployment"
+      template.alpha.openshift.io/wait-for-ready: "true"
+    labels:
+      app: "${APP_LABEL}"
+    name: "${APP_NAME}"
+  spec:
+    replicas: 1
+    strategy:
+      type: Rolling
+    template:
+      metadata:
+        labels:
+          app: "${APP_LABEL}"
+        name: "${APP_NAME}"
+      spec:
+        containers:
+        - image: "${APP_NAME}:latest"
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 3838
+            initialDelaySeconds: 30
+            timeoutSeconds: 30
+          name: "${APP_NAME}"
+          ports:
+          - containerPort: 3838
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 3838
+            initialDelaySeconds: 30
+            timeoutSeconds: 30
+    triggers:
+    - imageChangeParams:
+        automatic: true
+        containerNames:
+        - "${APP_NAME}"
+        from:
+          kind: ImageStreamTag
+          name: "${APP_NAME}:latest"
+      type: ImageChange
+    - type: ConfigChange
+
+- apiVersion: v1
+  kind: Service
+  metadata:
+    labels:
+      app: "${APP_LABEL}"
+    name: "${APP_NAME}"
+  spec:
+    ports:
+    - name: "${APP_NAME}-service"
+      port: 80
+      protocol: TCP
+      targetPort: 3838
+    selector:
+      app: "${APP_LABEL}"
+- apiVersion: v1
+  kind: Route
+  metadata:
+    labels:
+      app: "${APP_LABEL}"
+    name: "${APP_NAME}"
+  spec:
+    path: /
+    to:
+      kind: Service
+      name: "${APP_NAME}"
+
+parameters:
+- name: APP_NAME
+  description: Name used for the app
+  value: shiny-app
+- name: APP_LABEL
+  description: Label used for the app
+  value: shiny
+- name: APP_GIT_URI
+  description: Deployment git uri
+  value: https://github.com/sa-mw-dach/dev_demos.git
+- name: APP_GIT_BRANCH
+  description: Deployment git branch
+  value: feature/rshinydeployment
+- name: REPO_DOCKERFILE_PATH
+  description: Deployment git branch
+  value: "demos/09_rshiny_deployment/example_hello_shiny/Dockerfile"
