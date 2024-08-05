@@ -1,16 +1,8 @@
-kind: Project
-apiVersion: project.openshift.io/v1
-metadata:
-  name: shiny-base
-
----
-
 apiVersion: image.openshift.io/v1
 kind: ImageStream
 metadata:
   annotations:
-    description: ImageStrea for Shiny base image
-  namespace: "shiny-base"
+    description: ImageStream for Shiny base image
   name: "shiny-base-image"
 
 ---
@@ -20,7 +12,6 @@ kind: BuildConfig
 metadata:
   annotations:
     description: Build config for shiny base image
-  namespace: "shiny-base"
   name: "shiny-base-image"
 spec:
   output:
