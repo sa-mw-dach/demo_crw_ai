@@ -1,3 +1,3 @@
-FROM image-registry.openshift-image-registry.svc:5000/shiny-base-image:latest
+FROM image-registry.openshift-image-registry.svc:5000/mhtest5/shiny-base-image:latest
 COPY ./demos/09_rshiny_deployment/example_model/src/app.R /application
 ENV URL_MODEL="https://model-24081535-r-demo.apps.cluster-nhhgn.nhhgn.sandbox1471.opentlc.com/v2/models/model-24081535/infer"
