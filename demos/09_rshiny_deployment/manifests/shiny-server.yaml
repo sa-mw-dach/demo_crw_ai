@@ -127,4 +127,4 @@ parameters:
   value: feature/rshinydeployment
 - name: REPO_DOCKERFILE_PATH
   description: Deployment git branch
-  value: "demos/09_rshiny_deployment/example_hello_shiny/Dockerfile"
+  value: "demos/09_rshiny_deployment/example_hello_shiny/Containerfile"
