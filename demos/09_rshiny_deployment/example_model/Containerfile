@@ -15,6 +15,6 @@ RUN mkdir /application
 COPY ./demos/09_rshiny_deployment/example_model/src/app.R /application
 WORKDIR /application
 
-EXPOSE 8080
+# EXPOSE 8080
 USER 1001
-ENTRYPOINT R -s -e 'library("shiny"); runApp(host = "0.0.0.0", port = 8080)'
+ENTRYPOINT R -s -e 'library("shiny"); runApp(host = "0.0.0.0", port = 3838)'
