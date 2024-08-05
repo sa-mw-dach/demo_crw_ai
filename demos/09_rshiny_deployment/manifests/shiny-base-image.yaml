@@ -1,0 +1,21 @@
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  annotations:
+    description: Build config for shiny base image
+  name: "shiny-base-image"
+spec:
+  output:
+    to:
+      kind: ImageStreamTag
+      name: "shiny-base-image:latest"
+  source:
+    git:
+      uri: "https://github.com/sa-mw-dach/dev_demos.git"
+      ref: "feature/rshinydeployment"
+    type: Git
+  strategy:
+    dockerStrategy:
+      dockerfilePath: "demos/09_rshiny_deployment/image_base_shiny/Containerfile"
+  triggers:
+  - type: "ConfigChange"
