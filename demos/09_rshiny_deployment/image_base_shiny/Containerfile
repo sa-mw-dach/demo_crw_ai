@@ -1,4 +1,4 @@
-FROM registry.access.redhat.com/ubi9/podman:9.2-15.1697629675
+FROM registry.access.redhat.com/ubi9/ubi
 
 LABEL description="R-Shiny image based on RHEL UBI9"
 LABEL version="1.0"
