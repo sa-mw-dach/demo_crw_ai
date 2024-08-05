@@ -1,7 +1,7 @@
 FROM quay.io/sara_banderby/rhel9-r4:shiny
 LABEL maintainer="abanderb@redhat.com"
 LABEL description="R and RHEL9 image with breastcancer predictor."
-LABEL version= "1.0"
+# LABEL version= "1.0"
 USER root
 RUN dnf -y install glibc-langpack-en
 ENV LANG en_US.UTF-8
