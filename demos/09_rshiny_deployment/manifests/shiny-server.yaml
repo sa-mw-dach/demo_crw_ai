@@ -1,9 +1,11 @@
-apiVersion: apps.openshift.io/v1
+apiVersion: template.openshift.io/v1
 kind: Template
 metadata:
   name: shiny-server-template
   annotations:
+    openshift.io/display-name: "R Shiny App on OpenShift"
     description: "Shiny server template"
+    iconClass: icon-openshift
 objects:
 
 - apiVersion: image.openshift.io/v1
@@ -20,7 +22,6 @@ objects:
   metadata:
     annotations:
       description: Build config for shiny application
-      template.alpha.openshift.io/wait-for-ready: "true"
     labels:
       app: "${APP_LABEL}"
     name: "${APP_NAME}"
@@ -31,29 +32,36 @@ objects:
         name: "${APP_NAME}:latest"
     source:
       git:
-        ref: "${APP_GIT_BRANCH}"
         uri: "${APP_GIT_URI}"
+        ref: "${APP_GIT_BRANCH}"
       type: Git
     strategy:
       dockerStrategy:
         dockerfilePath: "${REPO_DOCKERFILE_PATH}"
     triggers:
-    - type: ImageChange
-    - type: ConfigChange
+    - type: "ImageChange"
+    - type: "ConfigChange"
 
-- apiVersion: apps.openshift.io/v1
-  kind: DeploymentConfig
+- apiVersion: apps/v1
+  kind: Deployment
   metadata:
     annotations:
       description: "${APP_NAME} Shiny Server Deployment"
-      template.alpha.openshift.io/wait-for-ready: "true"
+      image.openshift.io/triggers: >-
+        [{"from":{"kind":"ImageStreamTag","name":"${APP_NAME}:latest"},"fieldPath":"spec.template.spec.containers[?(@.name==\"${APP_NAME}\")].image"}]
     labels:
       app: "${APP_LABEL}"
     name: "${APP_NAME}"
   spec:
     replicas: 1
+    selector:
+      matchLabels:
+        app: "${APP_LABEL}"
     strategy:
-      type: Rolling
+      type: RollingUpdate
+      rollingUpdate:
+        maxUnavailable: 25%
+        maxSurge: 25%
     template:
       metadata:
         labels:
@@ -77,16 +85,6 @@ objects:
               port: 3838
             initialDelaySeconds: 30
             timeoutSeconds: 30
-    triggers:
-    - imageChangeParams:
-        automatic: true
-        containerNames:
-        - "${APP_NAME}"
-        from:
-          kind: ImageStreamTag
-          name: "${APP_NAME}:latest"
-      type: ImageChange
-    - type: ConfigChange
 
 - apiVersion: v1
   kind: Service
@@ -102,7 +100,7 @@ objects:
       targetPort: 3838
     selector:
       app: "${APP_LABEL}"
-- apiVersion: v1
+- apiVersion: route.openshift.io/v1
   kind: Route
   metadata:
     labels:
