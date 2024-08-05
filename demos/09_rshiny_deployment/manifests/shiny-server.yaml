@@ -4,7 +4,7 @@ metadata:
   name: shiny-server-template
   annotations:
     openshift.io/display-name: "R Shiny App on OpenShift"
-    description: "Shiny server template"
+    description: "Deploys an R Shiny App on OpenShift"
     iconClass: icon-openshift
 objects:
 
