@@ -7,7 +7,7 @@ RUN dnf -y install glibc-langpack-en
 ENV LANG en_US.UTF-8
 RUN mkdir /application
 RUN R -q -e 'install.packages(c("dplyr", "rpart","utf8", "generics", "bslib", "tibble", "parsnip", "xgboost", "httr", "jsonlite"), repos = "https://cran.rstudio.com/")'
-COPY src/app.R /application
+COPY ./demos/09_rshiny_deployment/example_model/src/app.R /application
 WORKDIR /application
 EXPOSE 8080
 USER 1001
