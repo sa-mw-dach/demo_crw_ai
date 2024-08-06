@@ -24,7 +24,7 @@ commands:
   - id: installdependencies
     exec:
       component: udi
-      commandLine: "curl https://rclone.org/install.sh | sudo bash"
+      commandLine: "pip install psycopg2-binary"
 events:
   postStart:
     - installdependencies
