@@ -24,7 +24,7 @@ commands:
   - id: installdependencies
     exec:
       component: udi
-      commandLine: "sudo -v ; curl https://rclone.org/install.sh | sudo bash"
+      commandLine: "curl https://rclone.org/install.sh | sudo bash"
 events:
   postStart:
     - installdependencies
