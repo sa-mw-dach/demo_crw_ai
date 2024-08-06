@@ -1,0 +1,30 @@
+schemaVersion: 2.2.0
+metadata:
+  name: udi-demo
+attributes:
+  controller.devfile.io/storage-type: ephemeral
+projects:
+  - name: devdemos
+    git:
+      remotes:
+        origin: 'https://github.com/sa-mw-dach/dev_demos.git'
+      checkoutFrom:
+        revision: feature/rshinydeployment
+components:
+- name: udi
+  container:
+    image: quay.io/devfile/universal-developer-image:ubi8-latest
+    memoryLimit: 4Gi
+    memoryRequest: 2Gi
+    cpuLimit: 4000m
+    cpuRequest: 1000m
+    mountSources: true
+    sourceMapping: /projects
+commands:
+  - id: installdependencies
+    exec:
+      component: udi
+      commandLine: "dnf install -y psql"
+events:
+  postStart:
+    - installdependencies
